@@ -7,10 +7,10 @@ namespace ItIsNotOnlyMe.PlayerController
     [CreateAssetMenu(fileName = "Input Event System", menuName = "Player Controller/Input Event System")]
     public class InputSystemSO : ScriptableObject, Player.IJugadorActions
     {
-        public event Action EventoSaltarEmpieza;
-        public event Action EventoSaltarTermina;
-        public event Action EventoAgacharseEmpieza;
-        public event Action EventoAgacharseTermina;
+        public event Action EventoSaltarEmpiezar;
+        public event Action EventoSaltarTerminar;
+        public event Action EventoAgacharseEmpiezar;
+        public event Action EventoAgacharseTerminar;
         public event Action<Vector2> EventoMoverse;
         public event Action<Vector2> EventoRotar;
 
@@ -35,17 +35,17 @@ namespace ItIsNotOnlyMe.PlayerController
         public void OnSaltar(InputAction.CallbackContext context)
         {
             if (context.phase == InputActionPhase.Performed)
-                EventoSaltarEmpieza?.Invoke();
+                EventoSaltarEmpiezar?.Invoke();
             if (context.phase == InputActionPhase.Canceled)
-                EventoSaltarTermina?.Invoke();
+                EventoSaltarTerminar?.Invoke();
         }
 
         public void OnAgacharse(InputAction.CallbackContext context)
         {
             if (context.phase == InputActionPhase.Performed)
-                EventoAgacharseEmpieza?.Invoke();
+                EventoAgacharseEmpiezar?.Invoke();
             if (context.phase == InputActionPhase.Canceled)
-                EventoAgacharseTermina?.Invoke();
+                EventoAgacharseTerminar?.Invoke();
         }
 
         public void OnDirecciones(InputAction.CallbackContext context)

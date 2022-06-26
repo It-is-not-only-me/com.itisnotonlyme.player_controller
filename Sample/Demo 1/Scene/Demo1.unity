@@ -316,7 +316,6 @@ GameObject:
   - component: {fileID: 1613056469}
   - component: {fileID: 1613056472}
   - component: {fileID: 1613056471}
-  - component: {fileID: 1613056470}
   m_Layer: 0
   m_Name: Cuerpo
   m_TagString: Untagged
@@ -339,20 +338,6 @@ Transform:
   m_Father: {fileID: 1656524448}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &1613056470
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1613056468}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1613056471
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -412,8 +397,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1656524448}
-  - component: {fileID: 1656524449}
   - component: {fileID: 1656524450}
+  - component: {fileID: 1656524451}
   m_Layer: 0
   m_Name: Jugador
   m_TagString: Untagged
@@ -438,30 +423,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1656524449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1656524447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86e78e713ed00084bac40753e7252ec2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputJugador: {fileID: 11400000, guid: cc5f9626eec16a64c905c0be7325c1ab, type: 2}
-  _camara: {fileID: 330732604}
-  _rapidezAlCaminar: 3
-  _tiempoDeTransicionEnMovimiento: 0
-  _fuerzaDeSalto: 8
-  _gravedad: 18
-  _lockCursor: 1
-  _sensiblidadDelMouse: 10
-  _minMaxpitch: {x: -40, y: 85}
-  _tiempoDeTransicionEnRotacion: 0
-  _yaw: 0
-  _pitch: 0
 --- !u!143 &1656524450
 CharacterController:
   m_ObjectHideFlags: 0
@@ -480,6 +441,29 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1656524451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656524447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddca5710086dab4993306015e94ef1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputJugador: {fileID: 11400000, guid: cc5f9626eec16a64c905c0be7325c1ab, type: 2}
+  _camara: {fileID: 330732604}
+  _rapidezAlCaminar: 3
+  _tiempoDeTransicionEnMovimiento: 0
+  _rapidezVertical: 3
+  _lockCursor: 1
+  _sensiblidadDelMouse: 10
+  _minMaxpitch: {x: -40, y: 85}
+  _tiempoDeTransicionEnRotacion: 0
+  _yaw: 0
+  _pitch: 0
 --- !u!1 &1699455337
 GameObject:
   m_ObjectHideFlags: 0

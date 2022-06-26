@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace ItIsNotOnlyMe.PlayerController
 {
-    [RequireComponent(typeof(PlayerController))]
-    public class PlayerController : MonoBehaviour
+    [RequireComponent(typeof(CharacterController))]
+    [AddComponentMenu("Controladores/Controlador jugador")]
+    public class ControladorJugadorLibre : MonoBehaviour
     {
         [SerializeField] private InputSystemSO _inputJugador;
 
@@ -17,8 +18,7 @@ namespace ItIsNotOnlyMe.PlayerController
 
         [SerializeField] private float _rapidezAlCaminar = 3;
         [SerializeField] private float _tiempoDeTransicionEnMovimiento = 0f;
-        [SerializeField] private float _fuerzaDeSalto = 8;
-        [SerializeField] private float _gravedad = 18;
+        [SerializeField] private float _rapidezVertical = 3;
 
         [SerializeField] private bool _lockCursor;
         [SerializeField] private float _sensiblidadDelMouse = 10;
@@ -37,21 +37,29 @@ namespace ItIsNotOnlyMe.PlayerController
         private Vector3 _velocidad;
         private Vector3 _smoothV;
 
-        private bool _saltando;
         private float _ultimoTiempoEnElPiso;
         private Vector3 _direccionDelInput;
+
+        private bool _saltando;
+        private bool _agachando;
 
         private void OnEnable()
         {
             _inputJugador.EventoMoverse += ActualizarInput;
-            _inputJugador.EventoSaltarEmpieza += Saltar;
+            _inputJugador.EventoSaltarEmpiezar += SaltarEmpezar;
+            _inputJugador.EventoSaltarTerminar += SaltarTerminar;
+            _inputJugador.EventoAgacharseEmpiezar += AgacharEmpezar;
+            _inputJugador.EventoAgacharseTerminar += AgacharTerminar;
             _inputJugador.EventoRotar += Rotar;
         }
 
         private void OnDisable()
         {
             _inputJugador.EventoMoverse -= ActualizarInput;
-            _inputJugador.EventoSaltarEmpieza -= Saltar;
+            _inputJugador.EventoSaltarEmpiezar -= SaltarEmpezar;
+            _inputJugador.EventoSaltarTerminar -= SaltarTerminar;
+            _inputJugador.EventoAgacharseEmpiezar -= AgacharEmpezar;
+            _inputJugador.EventoAgacharseTerminar -= AgacharTerminar;
             _inputJugador.EventoRotar -= Rotar;
         }
 
@@ -82,6 +90,12 @@ namespace ItIsNotOnlyMe.PlayerController
             Mover();
         }
 
+        private void SaltarEmpezar() => _saltando = true;
+        private void SaltarTerminar() => _saltando = false;
+
+        private void AgacharEmpezar() => _agachando = true;
+        private void AgacharTerminar() => _agachando = false;
+
         void ActualizarInput(Vector2 movimiento)
         {
             _direccionDelInput = new Vector3(movimiento.x, 0, movimiento.y).normalized;
@@ -93,25 +107,22 @@ namespace ItIsNotOnlyMe.PlayerController
             Vector3 targetVelocity = worldInputDir * _rapidezAlCaminar;
             _velocidad = Vector3.SmoothDamp(_velocidad, targetVelocity, ref _smoothV, _tiempoDeTransicionEnMovimiento);
 
-            _velocidadVertical -= _gravedad * Time.deltaTime;
+
+            if (!_saltando && !_agachando)
+                _velocidadVertical = 0;
+            if (_saltando)
+                _velocidadVertical += _rapidezVertical * Time.deltaTime;
+            if (_agachando)
+                _velocidadVertical -= _rapidezVertical * Time.deltaTime;
+
             _velocidad = new Vector3(_velocidad.x, _velocidadVertical, _velocidad.z);
 
-            var flags = _controlador.Move(_velocidad * Time.deltaTime);
+            CollisionFlags flags = _controlador.Move(_velocidad * Time.deltaTime);
             if (flags == CollisionFlags.Below)
             {
                 _saltando = false;
                 _ultimoTiempoEnElPiso = Time.time;
                 _velocidadVertical = 0;
-            }
-        }
-
-        void Saltar()
-        {
-            float timeSinceLastTouchedGround = Time.time - _ultimoTiempoEnElPiso;
-            if (_controlador.isGrounded || (!_saltando && timeSinceLastTouchedGround < 0.15f))
-            {
-                _saltando = true;
-                _velocidadVertical = _fuerzaDeSalto;
             }
         }
 
