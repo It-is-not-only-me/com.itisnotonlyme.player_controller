@@ -15,16 +15,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Subir",
-                    "type": "Button",
-                    "id": "364e56c9-02ef-4585-859c-90fb3d61fc64",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Bajar",
+                    "name": "Agacharse",
                     "type": "Button",
                     "id": "897a7e87-4c7c-4054-bf81-ce8ffed90232",
                     "expectedControlType": "Button",
@@ -36,6 +27,15 @@
                     "name": "Direcciones",
                     "type": "Value",
                     "id": "9c0b9914-c865-424c-85f9-094d44e8e85b",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Rotar",
+                    "type": "Value",
+                    "id": "1cb007b9-5020-4124-bce5-0fad154d73aa",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -56,23 +56,12 @@
                 },
                 {
                     "name": "",
-                    "id": "8f6f45d6-816c-4845-9349-a041a166701d",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Subir",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "9dcda898-d662-4e4c-8182-7e39022496c0",
                     "path": "<Keyboard>/ctrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Bajar",
+                    "action": "Agacharse",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -185,6 +174,17 @@
                     "action": "Direcciones",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "d74fc90b-a758-48c3-92e2-5c79523f8fb9",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotar",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

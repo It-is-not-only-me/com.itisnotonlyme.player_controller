@@ -37,16 +37,7 @@ public partial class @Player : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Subir"",
-                    ""type"": ""Button"",
-                    ""id"": ""364e56c9-02ef-4585-859c-90fb3d61fc64"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Bajar"",
+                    ""name"": ""Agacharse"",
                     ""type"": ""Button"",
                     ""id"": ""897a7e87-4c7c-4054-bf81-ce8ffed90232"",
                     ""expectedControlType"": ""Button"",
@@ -58,6 +49,15 @@ public partial class @Player : IInputActionCollection2, IDisposable
                     ""name"": ""Direcciones"",
                     ""type"": ""Value"",
                     ""id"": ""9c0b9914-c865-424c-85f9-094d44e8e85b"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Rotar"",
+                    ""type"": ""Value"",
+                    ""id"": ""1cb007b9-5020-4124-bce5-0fad154d73aa"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -78,23 +78,12 @@ public partial class @Player : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8f6f45d6-816c-4845-9349-a041a166701d"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Subir"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""9dcda898-d662-4e4c-8182-7e39022496c0"",
                     ""path"": ""<Keyboard>/ctrl"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Bajar"",
+                    ""action"": ""Agacharse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -207,6 +196,17 @@ public partial class @Player : IInputActionCollection2, IDisposable
                     ""action"": ""Direcciones"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d74fc90b-a758-48c3-92e2-5c79523f8fb9"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotar"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -216,9 +216,9 @@ public partial class @Player : IInputActionCollection2, IDisposable
         // Jugador
         m_Jugador = asset.FindActionMap("Jugador", throwIfNotFound: true);
         m_Jugador_Saltar = m_Jugador.FindAction("Saltar", throwIfNotFound: true);
-        m_Jugador_Subir = m_Jugador.FindAction("Subir", throwIfNotFound: true);
-        m_Jugador_Bajar = m_Jugador.FindAction("Bajar", throwIfNotFound: true);
+        m_Jugador_Agacharse = m_Jugador.FindAction("Agacharse", throwIfNotFound: true);
         m_Jugador_Direcciones = m_Jugador.FindAction("Direcciones", throwIfNotFound: true);
+        m_Jugador_Rotar = m_Jugador.FindAction("Rotar", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -279,17 +279,17 @@ public partial class @Player : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Jugador;
     private IJugadorActions m_JugadorActionsCallbackInterface;
     private readonly InputAction m_Jugador_Saltar;
-    private readonly InputAction m_Jugador_Subir;
-    private readonly InputAction m_Jugador_Bajar;
+    private readonly InputAction m_Jugador_Agacharse;
     private readonly InputAction m_Jugador_Direcciones;
+    private readonly InputAction m_Jugador_Rotar;
     public struct JugadorActions
     {
         private @Player m_Wrapper;
         public JugadorActions(@Player wrapper) { m_Wrapper = wrapper; }
         public InputAction @Saltar => m_Wrapper.m_Jugador_Saltar;
-        public InputAction @Subir => m_Wrapper.m_Jugador_Subir;
-        public InputAction @Bajar => m_Wrapper.m_Jugador_Bajar;
+        public InputAction @Agacharse => m_Wrapper.m_Jugador_Agacharse;
         public InputAction @Direcciones => m_Wrapper.m_Jugador_Direcciones;
+        public InputAction @Rotar => m_Wrapper.m_Jugador_Rotar;
         public InputActionMap Get() { return m_Wrapper.m_Jugador; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -302,15 +302,15 @@ public partial class @Player : IInputActionCollection2, IDisposable
                 @Saltar.started -= m_Wrapper.m_JugadorActionsCallbackInterface.OnSaltar;
                 @Saltar.performed -= m_Wrapper.m_JugadorActionsCallbackInterface.OnSaltar;
                 @Saltar.canceled -= m_Wrapper.m_JugadorActionsCallbackInterface.OnSaltar;
-                @Subir.started -= m_Wrapper.m_JugadorActionsCallbackInterface.OnSubir;
-                @Subir.performed -= m_Wrapper.m_JugadorActionsCallbackInterface.OnSubir;
-                @Subir.canceled -= m_Wrapper.m_JugadorActionsCallbackInterface.OnSubir;
-                @Bajar.started -= m_Wrapper.m_JugadorActionsCallbackInterface.OnBajar;
-                @Bajar.performed -= m_Wrapper.m_JugadorActionsCallbackInterface.OnBajar;
-                @Bajar.canceled -= m_Wrapper.m_JugadorActionsCallbackInterface.OnBajar;
+                @Agacharse.started -= m_Wrapper.m_JugadorActionsCallbackInterface.OnAgacharse;
+                @Agacharse.performed -= m_Wrapper.m_JugadorActionsCallbackInterface.OnAgacharse;
+                @Agacharse.canceled -= m_Wrapper.m_JugadorActionsCallbackInterface.OnAgacharse;
                 @Direcciones.started -= m_Wrapper.m_JugadorActionsCallbackInterface.OnDirecciones;
                 @Direcciones.performed -= m_Wrapper.m_JugadorActionsCallbackInterface.OnDirecciones;
                 @Direcciones.canceled -= m_Wrapper.m_JugadorActionsCallbackInterface.OnDirecciones;
+                @Rotar.started -= m_Wrapper.m_JugadorActionsCallbackInterface.OnRotar;
+                @Rotar.performed -= m_Wrapper.m_JugadorActionsCallbackInterface.OnRotar;
+                @Rotar.canceled -= m_Wrapper.m_JugadorActionsCallbackInterface.OnRotar;
             }
             m_Wrapper.m_JugadorActionsCallbackInterface = instance;
             if (instance != null)
@@ -318,15 +318,15 @@ public partial class @Player : IInputActionCollection2, IDisposable
                 @Saltar.started += instance.OnSaltar;
                 @Saltar.performed += instance.OnSaltar;
                 @Saltar.canceled += instance.OnSaltar;
-                @Subir.started += instance.OnSubir;
-                @Subir.performed += instance.OnSubir;
-                @Subir.canceled += instance.OnSubir;
-                @Bajar.started += instance.OnBajar;
-                @Bajar.performed += instance.OnBajar;
-                @Bajar.canceled += instance.OnBajar;
+                @Agacharse.started += instance.OnAgacharse;
+                @Agacharse.performed += instance.OnAgacharse;
+                @Agacharse.canceled += instance.OnAgacharse;
                 @Direcciones.started += instance.OnDirecciones;
                 @Direcciones.performed += instance.OnDirecciones;
                 @Direcciones.canceled += instance.OnDirecciones;
+                @Rotar.started += instance.OnRotar;
+                @Rotar.performed += instance.OnRotar;
+                @Rotar.canceled += instance.OnRotar;
             }
         }
     }
@@ -334,8 +334,8 @@ public partial class @Player : IInputActionCollection2, IDisposable
     public interface IJugadorActions
     {
         void OnSaltar(InputAction.CallbackContext context);
-        void OnSubir(InputAction.CallbackContext context);
-        void OnBajar(InputAction.CallbackContext context);
+        void OnAgacharse(InputAction.CallbackContext context);
         void OnDirecciones(InputAction.CallbackContext context);
+        void OnRotar(InputAction.CallbackContext context);
     }
 }
