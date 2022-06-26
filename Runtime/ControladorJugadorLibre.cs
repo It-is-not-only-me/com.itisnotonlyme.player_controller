@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ItIsNotOnlyMe.PlayerController
 {
     [RequireComponent(typeof(CharacterController))]
-    [AddComponentMenu("Controladores/Controlador jugador")]
+    [AddComponentMenu("Controladores/Controlador jugador libre")]
     public class ControladorJugadorLibre : MonoBehaviour
     {
         [SerializeField] private InputSystemSO _inputJugador;
